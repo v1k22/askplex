@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "askplex": {
+      "command": "node",
+      "args": ["C:/Users/bdhandha/Downloads/web-ai-terminal/mcp-server/index.js"]
+    }
+  }
+}

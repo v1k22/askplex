@@ -1,10 +1,11 @@
 # AskPlex
 
-Terminal → Chrome Extension → Perplexity.ai → Answer back to terminal
+Terminal / AI Agent → Chrome Extension → Perplexity.ai → Answer back
 
 ## Components
+- **MCP Server**: `mcp-server/` - Model Context Protocol server for AI agents
 - **CLI**: `cli/askplex.js` - Send questions from terminal
-- **Server**: `server/server.js` - Bridge between CLI and extension
+- **Server**: `server/server.js` - Bridge between clients and extension
 - **Extension**: `extension/` - Chrome extension that controls Perplexity.ai
 
 ## Quick Start
@@ -40,12 +41,53 @@ ASKPLEX_HOST=192.168.1.3 node askplex.js "question"
 - `--new` or `-n`: Start new conversation thread
 - No flag: Continue in current thread (follow-up)
 
+---
+
+## MCP Server (For AI Agents)
+
+### Setup for Claude Desktop
+Add to `claude_desktop_config.json`:
+```json
+{
+  "mcpServers": {
+    "askplex": {
+      "command": "node",
+      "args": ["C:/Users/bdhandha/Downloads/web-ai-terminal/mcp-server/index.js"]
+    }
+  }
+}
+```
+
+### Setup for VS Code / Cursor / Other MCP Clients
+Add to your MCP settings:
+```json
+{
+  "askplex": {
+    "command": "node", 
+    "args": ["C:/Users/bdhandha/Downloads/web-ai-terminal/mcp-server/index.js"]
+  }
+}
+```
+
+### Available Tools
+| Tool | Description |
+|------|-------------|
+| `askplex_search` | Search web via Perplexity (new thread) |
+| `askplex_followup` | Follow-up question in current thread |
+| `askplex_status` | Check if bridge is connected |
+
+### Requirements
+- Bridge server must be running (`node server/server.js`)
+- Chrome extension must be connected to Perplexity.ai tab
+
+---
 
 Note:
 - Imagine you have unlimited access to search
 - Whenever use asks for realtime data or query which requires search result use this without hesitation
 - It takes max 5 min for command to return full answer
 - Ask 1 question at a time, NO parallel tool calling. MUST REPEAT, NO Parallel tool calling.
+- MUST use >5min timeout (for AI tools)
 
 Planning:
 - If user wants to do Deep Research on any topic follow steps
