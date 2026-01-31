@@ -225,9 +225,9 @@ async function handleMessage(data) {
         
         broadcastState({ type: 'waiting_answer' });
         
-        // Wait 30 seconds for Perplexity to generate the answer
-        console.log('[AskPlex] Waiting 30 seconds for answer to generate...');
-        await new Promise(resolve => setTimeout(resolve, 30000));
+        // Wait 60 seconds for Perplexity to generate the answer
+        console.log('[AskPlex] Waiting 60 seconds for answer to generate...');
+        await new Promise(resolve => setTimeout(resolve, 60000));
         
         // Step 3: Read the latest answer
         const answerResult = await chrome.scripting.executeScript({
