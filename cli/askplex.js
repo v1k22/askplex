@@ -4,7 +4,10 @@
 
 const http = require('http');
 
-const BRIDGE_URL = 'http://localhost:7890/ask';
+// Allow remote host via environment variable or default to localhost
+const BRIDGE_HOST = process.env.ASKPLEX_HOST || 'localhost';
+const BRIDGE_PORT = process.env.ASKPLEX_PORT || '7890';
+const BRIDGE_URL = `http://${BRIDGE_HOST}:${BRIDGE_PORT}/ask`;
 
 // Parse arguments
 function parseArgs() {

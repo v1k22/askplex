@@ -3,8 +3,23 @@
 
 const http = require('http');
 const { WebSocketServer } = require('ws');
+const os = require('os');
 
 const PORT = 7890;
+const HOST = '0.0.0.0'; // Listen on all interfaces for remote access
+
+// Get local IP address
+function getLocalIP() {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        return iface.address;
+      }
+    }
+  }
+  return 'localhost';
+}
 
 // Store connected extension
 let extensionSocket = null;
@@ -175,15 +190,19 @@ function handleExtensionMessage(data) {
 }
 
 // Start server
-httpServer.listen(PORT, () => {
+httpServer.listen(PORT, HOST, () => {
+  const localIP = getLocalIP();
   console.log('');
   console.log('╔═══════════════════════════════════════════════════════╗');
   console.log('║           🚀 AskPlex Bridge Server Running            ║');
   console.log('╠═══════════════════════════════════════════════════════╣');
-  console.log(`║  HTTP endpoint:  http://localhost:${PORT}/ask            ║`);
-  console.log(`║  WebSocket:      ws://localhost:${PORT}                  ║`);
+  console.log(`║  Local:    http://localhost:${PORT}/ask                  ║`);
+  console.log(`║  Network:  http://${localIP}:${PORT}/ask            ║`);
   console.log('║                                                       ║');
   console.log('║  Waiting for Chrome extension to connect...          ║');
   console.log('╚═══════════════════════════════════════════════════════╝');
+  console.log('');
+  console.log(`📡 Remote CLI command:`);
+  console.log(`   ASKPLEX_HOST=${localIP} node askplex.js "your question"`);
   console.log('');
 });
