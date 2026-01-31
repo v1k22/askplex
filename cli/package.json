@@ -1,0 +1,13 @@
+{
+  "name": "askplex",
+  "version": "1.0.0",
+  "description": "CLI tool to send queries to AskPlex",
+  "main": "askplex.js",
+  "bin": {
+    "askplex": "./askplex.js"
+  },
+  "scripts": {
+    "start": "node askplex.js"
+  },
+  "dependencies": {}
+}
