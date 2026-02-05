@@ -176,10 +176,10 @@ async function handleMessage(data) {
           args: [message.query]
         });
         
-        console.log('[AskPlex] Text entry dispatched, waiting 2 seconds...');
+        console.log('[AskPlex] Text entry dispatched, waiting 5 seconds...');
         
-        // Wait 2 seconds for text to be processed by Lexical
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // Wait 5 seconds for text to be processed by Lexical
+        await new Promise(resolve => setTimeout(resolve, 5000));
         
         broadcastState({ type: 'submitting' });
         console.log('[AskPlex] Clicking submit button...');
